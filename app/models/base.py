@@ -7,7 +7,8 @@ from app.settings import settings
 
 
 class BaseModel(models.Model):
-    id = fields.BigIntField(pk=True, index=True)
+    # id = fields.BigIntField(pk=True, index=True)
+    id = fields.BigIntField( index=True)
 
     async def to_dict(self, m2m: bool = False, exclude_fields: list[str] | None = None):
         if exclude_fields is None:
