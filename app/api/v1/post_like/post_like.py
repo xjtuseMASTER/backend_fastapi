@@ -1,18 +1,16 @@
-import logging
-from fastapi import APIRouter, HTTPException
-from typing import List
-from app.models.post import PostLike
-from app.schemas.post_like_schemas import PostLikeCreate, PostLikeUpdate, BasePostLike
-
-logger = logging.getLogger(__name__)
+from fastapi import APIRouter, Query
+from app.controllers.post_like_controller import post_like_controller
+from app.schemas import Success
+from app.schemas.post_like_schemas import PostLikeCreate
 
 router = APIRouter()
 
-@router.post("/", response_model=BasePostLike, summary="创建帖子点赞", description="根据提供的信息创建一个新的帖子点赞记录")
-async def create_post_like(post_like: PostLikeCreate):
-    new_like = await PostLike.create(**post_like.dict())
-    return new_like
+@router.post("/create", summary="创建帖子点赞")
+async def create_post_like(like_in: PostLikeCreate):
+    await post_like_controller.create_post_like(obj_in=like_in)
+    return Success(msg="Created Successfully")
 
-@router.get("/", response_model=List[BasePostLike], summary="获取所有帖子点赞", description="返回数据库中所有帖子的点赞记录")
-async def get_all_post_likes():
-    return await PostLike.all()
+@router.delete("/delete", summary="删除帖子点赞")
+async def delete_post_like(id: int = Query(..., description="点赞ID")):
+    await post_like_controller.delete_post_like(like_id=id)
+    return Success(msg="Deleted Successfully")

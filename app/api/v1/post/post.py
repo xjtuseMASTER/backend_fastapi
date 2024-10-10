@@ -1,42 +1,31 @@
-import logging
-from fastapi import APIRouter, HTTPException
-from typing import List
-from app.models.post import Post
-from app.schemas.post_schemas import PostCreate, PostUpdate, BasePost
-
-logger = logging.getLogger(__name__)
+from fastapi import APIRouter, Query
+from app.controllers.post_controller import post_controller
+from app.schemas import Success
+from app.schemas.post_schemas import PostCreate, PostUpdate
 
 router = APIRouter()
 
-@router.post("/", response_model=BasePost, summary="创建帖子", description="根据提供的帖子信息创建一个新的帖子")
-async def create_post(post: PostCreate):
-    new_post = await Post.create(**post.dict())
-    return new_post
+@router.get("/list", summary="查看帖子列表")
+async def list_posts(title: str = Query(None, description="帖子标题")):
+    posts = await post_controller.get_posts_by_title(title)
+    return Success(data=posts)
 
-@router.get("/", response_model=List[BasePost], summary="获取所有帖子", description="返回数据库中所有帖子的基本信息")
-async def get_all_posts():
-    return await Post.all()
+@router.get("/get", summary="查看帖子")
+async def get_post(id: int = Query(..., description="帖子ID")):
+    post = await post_controller.get(id=id)
+    return Success(data=post)
 
-@router.get("/{post_id}", response_model=BasePost, summary="获取指定帖子", description="根据帖子ID获取特定帖子信息")
-async def get_post_by_id(post_id: int):
-    post = await Post.get_or_none(post_id=post_id)
-    if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
-    return post
+@router.post("/create", summary="创建帖子")
+async def create_post(post_in: PostCreate):
+    await post_controller.create_post(obj_in=post_in)
+    return Success(msg="Created Successfully")
 
-@router.put("/{post_id}", response_model=BasePost, summary="更新帖子信息", description="根据帖子ID更新帖子的基本信息")
-async def update_post(post_id: int, post_data: PostUpdate):
-    post = await Post.get_or_none(post_id=post_id)
-    if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
-    post.update_from_dict(post_data.dict(exclude_unset=True))
-    await post.save()
-    return post
+@router.post("/update", summary="更新帖子")
+async def update_post(post_in: PostUpdate):
+    await post_controller.update_post(obj_in=post_in)
+    return Success(msg="Updated Successfully")
 
-@router.delete("/{post_id}", response_model=dict, summary="删除帖子", description="根据帖子ID删除帖子信息")
-async def delete_post(post_id: int):
-    post = await Post.get_or_none(post_id=post_id)
-    if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
-    await post.delete()
-    return {"message": "Post deleted successfully"}
+@router.delete("/delete", summary="删除帖子")
+async def delete_post(id: int = Query(..., description="帖子ID")):
+    await post_controller.delete_post(post_id=id)
+    return Success(msg="Deleted Successfully")
