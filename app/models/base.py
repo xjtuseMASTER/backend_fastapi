@@ -15,24 +15,25 @@ class BaseModel(models.Model):
             exclude_fields = []
 
         d = {}
-        for field in self._meta.db_fields:
-            if field not in exclude_fields:
-                value = getattr(self, field)
-                if isinstance(value, datetime):
+        for field in self._meta.db_fields:  # 遍历模型所有字段
+            if field not in exclude_fields:  # 跳过需要排除的字段
+                value = getattr(self, field)  # 获取字段值
+                if isinstance(value, datetime):  # 如果是 datetime 类型，格式化为字符串
                     value = value.strftime(settings.DATETIME_FORMAT)
-                d[field] = value
+                d[field] = value  # 将值添加到字典中
 
-        if m2m:
+        if m2m:  # 如果需要包含多对多字段
             tasks = [
                 self.__fetch_m2m_field(field, exclude_fields)
-                for field in self._meta.m2m_fields
+                for field in self._meta.m2m_fields  # 遍历多对多字段
                 if field not in exclude_fields
             ]
-            results = await asyncio.gather(*tasks)
+            results = await asyncio.gather(*tasks)  # 异步地获取所有多对多字段的值
             for field, values in results:
-                d[field] = values
+                d[field] = values  # 将多对多字段的值也添加到字典中
 
-        return d
+        return d  # 返回最终的字典
+
 
     async def __fetch_m2m_field(self, field, exclude_fields):
         values = await getattr(self, field).all().values()
