@@ -7,7 +7,7 @@ router = APIRouter()
 
 @router.get("/test", summary="")
 async def tets():
-    return Success(msg="tets")
+    return Success()
 
 
 @router.get("/list", summary="查看用户列表")

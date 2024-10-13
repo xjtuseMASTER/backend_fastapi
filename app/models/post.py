@@ -1,4 +1,4 @@
-from tortoise import fields
+from tortoise import fields, models
 
 
 from .base import BaseModel, TimestampMixin
@@ -6,7 +6,7 @@ from .enums import MethodType
 
 
 
-class User(BaseModel, TimestampMixin):
+class User(models.Model):
     """
     用户模型：用于存储用户的基本信息。
     """
@@ -29,7 +29,7 @@ class User(BaseModel, TimestampMixin):
         table = "t_user"
         table_description = "用户表：存储用户的基本信息及相关数据"
 
-class Post(BaseModel, TimestampMixin):
+class Post(models.Model):
     """
     帖子模型：用于存储用户发布的帖子内容
     """
@@ -48,7 +48,7 @@ class Post(BaseModel, TimestampMixin):
         table_description = "帖子表，用于存储用户发布的帖子内容"
 
 # 评论模型
-class Comment(BaseModel, TimestampMixin):
+class Comment(models.Model):
     comment_id = fields.CharField(pk=True, max_length=36, description="评论ID")  # Changed from IntField to CharField (UUID)
     post_id = fields.ForeignKeyField("models.Post", related_name="comments", description="关联帖子ID")  # Foreign key changed to CharField
     user_id = fields.ForeignKeyField("models.User", related_name="comments", description="用户ID")  # Foreign key changed to CharField
@@ -62,7 +62,7 @@ class Comment(BaseModel, TimestampMixin):
         table_description = "评论表，用于存储帖子的评论数据"
 
 # 关注模型
-class Follower(BaseModel, TimestampMixin):
+class Follower(models.Model):
     follower_id = fields.CharField(pk=True, max_length=36, description="关注者ID")  # Changed to CharField (UUID)
     to_user_id = fields.ForeignKeyField("models.User", related_name="followers", description="被关注用户ID")  # ForeignKey to User
     follow_each_other = fields.IntField(default=0, description="是否互相关注")
@@ -72,7 +72,7 @@ class Follower(BaseModel, TimestampMixin):
         table_description = "关注表，存储用户之间的关注关系"
 
 # 帖子点赞模型
-class PostLike(BaseModel, TimestampMixin):
+class PostLike(models.Model):
     like_id = fields.CharField(pk=True, max_length=36, description="点赞ID")  # Changed to CharField (UUID)
     user_id = fields.ForeignKeyField("models.User", related_name="post_likes", description="点赞用户ID")  # ForeignKey to User
     to_post_id = fields.ForeignKeyField("models.Post", related_name="likes", description="关联帖子ID")  # ForeignKey to Post
@@ -84,7 +84,7 @@ class PostLike(BaseModel, TimestampMixin):
         table_description = "帖子点赞表"
 
 # 评论点赞模型
-class CommentLike(BaseModel, TimestampMixin):
+class CommentLike(models.Model):
     like_id = fields.IntField(pk=True, description="点赞ID")
     user_id = fields.IntField(description="点赞用户ID")
     to_comment_id = fields.IntField(description="关联评论ID")
@@ -95,7 +95,7 @@ class CommentLike(BaseModel, TimestampMixin):
         table_description = "评论点赞表"
 
 # 帖子收藏模型
-class PostCollect(BaseModel, TimestampMixin):
+class PostCollect(models.Model):
     collect_id = fields.CharField(pk=True, max_length=36, description="收藏ID")  # Changed to CharField (UUID)
     user_id = fields.ForeignKeyField("models.User", related_name="post_collects", description="收藏用户ID")  # ForeignKey to User
     to_post_id = fields.ForeignKeyField("models.Post", related_name="collects", description="关联帖子ID")  # ForeignKey to Post
@@ -107,7 +107,7 @@ class PostCollect(BaseModel, TimestampMixin):
         table_description = "帖子收藏表"
 
 # 帖子图片模型
-class PostPicture(BaseModel, TimestampMixin):
+class PostPicture(models.Model):
     pictures_id = fields.CharField(pk=True, max_length=36, description="图片ID")  # Changed to CharField (UUID)
     to_post_id = fields.ForeignKeyField("models.Post", related_name="pictures", description="关联帖子ID")  # ForeignKey to Post
     sequence = fields.IntField(description="图片顺序")
@@ -118,7 +118,7 @@ class PostPicture(BaseModel, TimestampMixin):
         table_description = "帖子图片表"
 
 
-class UserPreference(BaseModel):
+class UserPreference(models.Model):
     user_id = fields.ForeignKeyField("models.User", related_name="preferences", description="用户ID",pk=True)
     app_notification = fields.BooleanField(default=True, description="是否开启消息提醒")
     theme = fields.CharField(max_length=50, description="主题", default="light")
@@ -127,7 +127,7 @@ class UserPreference(BaseModel):
         table = "t_user_preference"
         table_description = "用户偏好设置表"
 
-class HistoryUploads(BaseModel):
+class HistoryUploads(models.Model):
     user_id = fields.ForeignKeyField("models.User", related_name="history_uploads", description="用户ID",pk=True)
     video_url = fields.CharField(max_length=255, description="视频URL")
     analysis = fields.TextField(description="分析记录")
@@ -137,7 +137,7 @@ class HistoryUploads(BaseModel):
         table_description = "历史健身上传记录表"
         
         
-class BodyData(BaseModel, TimestampMixin):
+class BodyData(models.Model):
     user_id = fields.ForeignKeyField("models.User", related_name="body_data", description="用户ID", pk=True)  # ForeignKey to User
     height = fields.FloatField(description="身高")
     weight = fields.FloatField(description="体重")
@@ -149,7 +149,7 @@ class BodyData(BaseModel, TimestampMixin):
         table_description = "用户身体数据表"
         
         
-class Muscle(BaseModel, TimestampMixin):
+class Muscle(models.Model):
     muscle_id = fields.CharField(pk=True, max_length=36, description="肌肉ID")  # Use muscle_id as the primary key
     user_id = fields.ForeignKeyField("models.User", related_name="muscles", description="用户ID")  # ForeignKey, not primary key
     muscle_name = fields.CharField(max_length=255, description="肌肉名称")
