@@ -2,13 +2,18 @@ import logging
 
 from fastapi import APIRouter, Query
 
-from app.controllers.menu import menu_controller
+# from app.controllers.menu import menu_controller
 from app.schemas.base import Fail, Success, SuccessExtra
 from app.schemas.menus import *
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
+
+@router.get("/test", summary="查看菜单")
+async def get_menu():
+    return Success()
+
 
 
 @router.get("/list", summary="查看菜单列表")

@@ -8,7 +8,7 @@ from app.settings import settings
 
 class BaseModel(models.Model):
     # id = fields.BigIntField(pk=True, index=True)
-    id = fields.BigIntField( index=True)
+    id = fields.BigIntField()
 
     async def to_dict(self, m2m: bool = False, exclude_fields: list[str] | None = None):
         if exclude_fields is None:
@@ -56,9 +56,9 @@ class BaseModel(models.Model):
 
 
 class UUIDModel:
-    uuid = fields.UUIDField(unique=True, pk=False, index=True)
+    uuid = fields.UUIDField(unique=True, pk=False)
 
 
 class TimestampMixin:
-    created_at = fields.DatetimeField(auto_now_add=True, index=True)
-    updated_at = fields.DatetimeField(auto_now=True, index=True)
+    created_at = fields.DatetimeField(auto_now_add=True)
+    updated_at = fields.DatetimeField(auto_now=True)
