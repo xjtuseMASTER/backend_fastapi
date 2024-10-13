@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54649a03-3239-4cc7-abc6-e0f9b6922224" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +32,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "akane-dev",
     "last_opened_file_path": "//wsl.localhost/Ubuntu-22.04/home/akane-laptop/Project/FitFormAI/backend_fastapi",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -62,7 +63,8 @@
       <workItem from="1728531687008" duration="532000" />
       <workItem from="1728539790780" duration="745000" />
       <workItem from="1728567043093" duration="273000" />
-      <workItem from="1728567332126" duration="3425000" />
+      <workItem from="1728567332126" duration="3703000" />
+      <workItem from="1728803361456" duration="2008000" />
     </task>
     <servers />
   </component>
