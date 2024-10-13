@@ -4,7 +4,7 @@ import jwt
 from fastapi import Depends, Header, HTTPException, Request
 
 from app.core.ctx import CTX_USER_ID
-from app.models import Role, User
+from app.models import User
 from app.settings import settings
 
 
@@ -34,19 +34,20 @@ class AuthControl:
 class PermissionControl:
     @classmethod
     async def has_permission(cls, request: Request, current_user: User = Depends(AuthControl.is_authed)) -> None:
-        if current_user.is_superuser:
-            return
-        method = request.method
-        path = request.url.path
-        roles: list[Role] = await current_user.roles
-        if not roles:
-            raise HTTPException(status_code=403, detail="The user is not bound to a role")
-        apis = [await role.apis for role in roles]
-        permission_apis = list(set((api.method, api.path) for api in sum(apis, [])))
-        # path = "/api/v1/auth/userinfo"
-        # method = "GET"
-        if (method, path) not in permission_apis:
-            raise HTTPException(status_code=403, detail=f"Permission denied method:{method} path:{path}")
+        pass
+        # if current_user.is_superuser:
+        #     return
+        # method = request.method
+        # path = request.url.path
+        # roles: list[Role] = await current_user.roles
+        # if not roles:
+        #     raise HTTPException(status_code=403, detail="The user is not bound to a role")
+        # apis = [await role.apis for role in roles]
+        # permission_apis = list(set((api.method, api.path) for api in sum(apis, [])))
+        # # path = "/api/v1/auth/userinfo"
+        # # method = "GET"
+        # if (method, path) not in permission_apis:
+        #     raise HTTPException(status_code=403, detail=f"Permission denied method:{method} path:{path}")
 
 
 DependAuth = Depends(AuthControl.is_authed)

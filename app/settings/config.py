@@ -39,7 +39,7 @@ class Settings(BaseSettings):
                     "port": 25464,  # Database port
                     "user": "Collaborators1",  # Database username
                     "password": "XJTUse123",  # Database password
-                    "database": "lhdbmysql-idgg3j0k",  # Database name
+                    "database": "xjtu",  # Database name
                 },
             },
             # PostgreSQL configuration

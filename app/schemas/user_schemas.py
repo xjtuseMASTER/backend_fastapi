@@ -20,6 +20,7 @@ class BaseUser(BaseModel):
     collects_num: int
 
 class UserCreate(BaseModel):
+    user_id : int = Field(examples=123)
     email: str = Field(example="example@domain.com")
     password: str = Field(example="yourpassword")
     user_name: str = Field(example="John Doe")

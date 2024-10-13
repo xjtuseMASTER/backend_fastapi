@@ -5,6 +5,11 @@ from app.schemas.user_schemas import UserCreate, UserUpdate
 
 router = APIRouter()
 
+@router.get("/test", summary="")
+async def tets():
+    return Success(msg="tets")
+
+
 @router.get("/list", summary="查看用户列表")
 async def list_users(name: str = Query(None, description="用户名")):
     users = await user_controller.get_users_by_name(name)

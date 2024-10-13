@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from tortoise.expressions import Q
 
 from app.api import api_router
-from app.controllers.api import api_controller
+# from app.controllers.api import api_controller
 from app.controllers.user import UserCreate, user_controller
 from app.core.exceptions import (
     DoesNotExist,
@@ -22,7 +22,7 @@ from app.core.exceptions import (
     ResponseValidationHandle,
 )
 from app.log import logger
-from app.models.admin import Api, Menu, Role
+# from app.models.admin import Api, Menu, Role
 from app.schemas.menus import MenuType
 from app.settings.config import settings
 
@@ -175,58 +175,59 @@ async def init_menus():
         )
 
 
-async def init_apis():
-    apis = await api_controller.model.exists()
-    if not apis:
-        await api_controller.refresh_api()
+# async def init_apis():
+#     apis = await api_controller.model.exists()
+#     if not apis:
+#         await api_controller.refresh_api()
 
 
 async def init_db():
-    command = Command(tortoise_config=settings.TORTOISE_ORM)
-    try:
-        await command.init_db(safe=True)
-    except FileExistsError:
-        pass
+    pass
+    # command = Command(tortoise_config=settings.TORTOISE_ORM)
+    # try:
+    #     await command.init_db(safe=True)
+    # except FileExistsError:
+    #     pass
 
-    await command.init()
-    try:
-        await command.migrate()
-    except AttributeError:
-        logger.warning("unable to retrieve model history from database, model history will be created from scratch")
-        shutil.rmtree("migrations")
-        await command.init_db(safe=True)
+    # await command.init()
+    # try:
+    #     await command.migrate()
+    # except AttributeError:
+    #     logger.warning("unable to retrieve model history from database, model history will be created from scratch")
+    #     shutil.rmtree("migrations")
+    #     await command.init_db(safe=True)
 
-    await command.upgrade(run_in_transaction=True)
+    # await command.upgrade(run_in_transaction=True)
 
 
-async def init_roles():
-    roles = await Role.exists()
-    if not roles:
-        admin_role = await Role.create(
-            name="管理员",
-            desc="管理员角色",
-        )
-        user_role = await Role.create(
-            name="普通用户",
-            desc="普通用户角色",
-        )
+# async def init_roles():
+#     roles = await Role.exists()
+#     if not roles:
+#         admin_role = await Role.create(
+#             name="管理员",
+#             desc="管理员角色",
+#         )
+#         user_role = await Role.create(
+#             name="普通用户",
+#             desc="普通用户角色",
+#         )
 
-        # 分配所有API给管理员角色
-        all_apis = await Api.all()
-        await admin_role.apis.add(*all_apis)
-        # 分配所有菜单给管理员和普通用户
-        all_menus = await Menu.all()
-        await admin_role.menus.add(*all_menus)
-        await user_role.menus.add(*all_menus)
+#         # 分配所有API给管理员角色
+#         all_apis = await Api.all()
+#         await admin_role.apis.add(*all_apis)
+#         # 分配所有菜单给管理员和普通用户
+#         all_menus = await Menu.all()
+#         await admin_role.menus.add(*all_menus)
+#         await user_role.menus.add(*all_menus)
 
-        # 为普通用户分配基本API
-        basic_apis = await Api.filter(Q(method__in=["GET"]) | Q(tags="基础模块"))
-        await user_role.apis.add(*basic_apis)
+#         # 为普通用户分配基本API
+#         basic_apis = await Api.filter(Q(method__in=["GET"]) | Q(tags="基础模块"))
+#         await user_role.apis.add(*basic_apis)
 
 
 async def init_data():
     await init_db()
-    await init_superuser()
-    await init_menus()
-    await init_apis()
-    await init_roles()
+    # await init_superuser()
+    # await init_menus()
+    # await init_apis()
+    # await init_roles()
