@@ -35,21 +35,21 @@ class BaseModel(models.Model):
         return d  # 返回最终的字典
 
 
-    async def __fetch_m2m_field(self, field, exclude_fields):
-        values = await getattr(self, field).all().values()
-        formatted_values = []
+    # async def __fetch_m2m_field(self, field, exclude_fields):
+    #     values = await getattr(self, field).all().values()
+    #     formatted_values = []
 
-        for value in values:
-            formatted_value = {}
-            for k, v in value.items():
-                if k not in exclude_fields:
-                    if isinstance(v, datetime):
-                        formatted_value[k] = v.strftime(settings.DATETIME_FORMAT)
-                    else:
-                        formatted_value[k] = v
-            formatted_values.append(formatted_value)
+    #     for value in values:
+    #         formatted_value = {}
+    #         for k, v in value.items():
+    #             if k not in exclude_fields:
+    #                 if isinstance(v, datetime):
+    #                     formatted_value[k] = v.strftime(settings.DATETIME_FORMAT)
+    #                 else:
+    #                     formatted_value[k] = v
+    #         formatted_values.append(formatted_value)
 
-        return field, formatted_values
+    #     return field, formatted_values
 
     class Meta:
         abstract = True

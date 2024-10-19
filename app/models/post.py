@@ -50,8 +50,8 @@ class Post(BaseModel, TimestampMixin):
 # 评论模型
 class Comment(BaseModel, TimestampMixin):
     comment_id = fields.CharField(pk=True, max_length=36, description="评论ID")  # Changed from IntField to CharField (UUID)
-    post_id = fields.ForeignKeyField("models.Post", related_name="comments", description="关联帖子ID")  # Foreign key changed to CharField
-    user_id = fields.ForeignKeyField("models.User", related_name="comments", description="用户ID")  # Foreign key changed to CharField
+    post_id = fields.CharField(max_length=36, description="关联帖子ID")  # Foreign key changed to CharField
+    user_id = fields.CharField(max_length=36, description="用户ID")  # Foreign key changed to CharField
     father_comment_id = fields.CharField(max_length=36, description="评论ID")
     content = fields.TextField(description="评论内容")
     level = fields.IntField(description="评论层级")

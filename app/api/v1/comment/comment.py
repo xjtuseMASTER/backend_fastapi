@@ -10,10 +10,11 @@ async def list_comments(content: str = Query(None, description="评论内容")):
     comments = await comment_controller.get_comments_by_content(content)
     return Success(data=comments)
 
-@router.get("/get", summary="查看评论")
-async def get_comment(id: int = Query(..., description="评论ID")):
-    comment = await comment_controller.get(id=id)
-    return Success(data=comment)
+@router.get("/getComment", summary="查看评论")
+async def get_comment(comment_id: str = Query(..., description="评论ID")):
+    comment = await comment_controller.get_comment(comment_id=comment_id)
+    print("get")
+    return Success(data=await comment.to_dict())
 
 @router.post("/create", summary="创建评论")
 async def create_comment(comment_in: CommentCreate):
