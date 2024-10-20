@@ -5,16 +5,29 @@ from app.schemas.comment_schemas import CommentCreate, CommentUpdate
 
 router = APIRouter()
 
-@router.get("/list", summary="查看评论列表")
-async def list_comments(content: str = Query(None, description="评论内容")):
-    comments = await comment_controller.get_comments_by_content(content)
-    return Success(data=comments)
 
 @router.get("/getComment", summary="查看评论")
 async def get_comment(comment_id: str = Query(..., description="评论ID")):
     comment = await comment_controller.get_comment(comment_id=comment_id)
     print("get")
     return Success(data=await comment.to_dict())
+
+
+
+
+
+
+
+
+
+
+
+
+@router.get("/list", summary="查看评论列表")
+async def list_comments(content: str = Query(None, description="评论内容")):
+    comments = await comment_controller.get_comments_by_content(content)
+    return Success(data=comments)
+
 
 @router.post("/create", summary="创建评论")
 async def create_comment(comment_in: CommentCreate):
