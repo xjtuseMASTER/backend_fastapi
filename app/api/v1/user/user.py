@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 from app.controllers.user_controller import user_controller
 from app.schemas import Success
-from app.schemas.user_schemas import UserCreate, UserUpdate
+from app.schemas.user_schemas import *
 
 router = APIRouter()
 
@@ -14,6 +14,15 @@ async def getuserbyid(user_id:str = Query(..., description="用户ID")):
     user = await user_controller.get_user(user_id=user_id)
     print("get")
     return Success(data=await user.to_dict())
+
+
+@router.post("/change", summary="用户修改个人资料")
+async def update_user_info(user: UserUpdateRequest):
+    # 在这里处理数据库更新逻辑
+    success = await user_controller.update_user_in_db(user)  # 伪函数，请自行实现
+    if success:
+        msg="OK,成功更新"
+    return Success(msg=msg)
 
 
 

@@ -60,5 +60,5 @@ class UUIDModel:
 
 
 class TimestampMixin:
-    created_at = fields.DatetimeField(auto_now_add=True)
-    updated_at = fields.DatetimeField(auto_now=True)
+    created_at = fields.DatetimeField()
+    updated_at = fields.DatetimeField()

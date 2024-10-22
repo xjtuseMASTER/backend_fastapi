@@ -34,3 +34,10 @@ class UserUpdate(BaseModel):
     avatar: Optional[str] = Field(default=None)
     gender: Optional[GenderType] = Field(example=GenderType.FEMALE.value)
     selfIntro: Optional[str] = Field(example="Updated introduction.")
+    
+class UserUpdateRequest(BaseModel):
+    user_id: str
+    user_name: Optional[str] = None
+    gender: Optional[str] = None
+    birthday: Optional[str] = None
+    selfIntro: Optional[str] = None

@@ -12,6 +12,8 @@ from .follower import follower_router
 from .post import post_router
 from .comment import comment_router
 from .post_like import post_like_router
+from .post_collect import post_collect_router
+
 
 
 
@@ -36,3 +38,4 @@ v1_router.include_router(post_router, prefix="/post", dependencies=[DependPermis
 v1_router.include_router(follower_router, prefix="/follower", dependencies=[DependPermisson])
 v1_router.include_router(comment_router, prefix="/comment", dependencies=[DependPermisson])
 v1_router.include_router(post_like_router, prefix="/post_like", dependencies=[DependPermisson])
+v1_router.include_router(post_collect_router, prefix="/post_collect", dependencies=[DependPermisson])

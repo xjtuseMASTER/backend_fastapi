@@ -1,6 +1,7 @@
 from app.models.post import User
 from app.core.crud import CRUDBase
-from app.schemas.user_schemas import UserCreate, UserUpdate
+from app.schemas.user_schemas import *
+from tortoise.exceptions import *
 
 class UserController(CRUDBase[User,UserCreate,UserUpdate]):
     def __init__(self):
@@ -9,6 +10,23 @@ class UserController(CRUDBase[User,UserCreate,UserUpdate]):
     
     async def get_user(self,user_id:str):
         return await User.get(user_id=user_id)
+    
+    async def update_user_in_db(self,user: UserUpdateRequest) -> bool:
+        try:
+            # 查询用户是否存在
+            existing_user = await User.get(user_id=user.user_id)
+        except DoesNotExist:
+            return False  # 如果用户不存在，返回 False
+
+        # 更新非空字段的数据
+        update_data = user.dict(exclude_unset=True)
+        for key, value in update_data.items():
+            setattr(existing_user, key, value)
+
+        # 保存更新后的用户信息
+        await existing_user.save()
+        return True  # 更新成功
+        
     
     
     
@@ -49,6 +67,9 @@ class UserController(CRUDBase[User,UserCreate,UserUpdate]):
             await user.delete()
             return True
         return False
+    
+    
+
 
 
 user_controller = UserController()

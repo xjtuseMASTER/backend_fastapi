@@ -5,6 +5,16 @@ from app.schemas.post_schemas import PostCreate, PostUpdate
 
 router = APIRouter()
 
+@router.get("/stream", summary="查看帖子")
+async def getposts(pageNumber: int = Query(..., description="页码id"),user_id : int | None = None):
+    posts = await post_controller.get_posts(pageNumber)
+    print("get")
+    return Success(data= [await post.to_dict() for post in posts])
+
+
+
+
+
 @router.get("/list", summary="查看帖子列表")
 async def list_posts(title: str = Query(None, description="帖子标题")):
     posts = await post_controller.get_posts_by_title(title)
