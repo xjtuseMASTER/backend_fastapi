@@ -15,7 +15,7 @@ class User(BaseModel, TimestampMixin):
     password = fields.CharField(max_length=255, description="用户密码")
     likes_num = fields.IntField(default=0, description="点赞数量")
     user_name = fields.CharField(max_length=255, description="用户名")
-    birthday = fields.DateField(null=True, description="用户生日")
+    birthday = fields.DatetimeField(null=True, description="用户生日")
     selfIntro = fields.CharField(max_length=255, null=True, description="自我介绍")
     avatar = fields.CharField(max_length=255, null=True, description="用户头像链接")
     gender = fields.CharField(max_length=50, null=True, description="用户性别")

@@ -1,6 +1,29 @@
 from app.models.post import User
+from app.core.crud import CRUDBase
+from app.schemas.user_schemas import UserCreate, UserUpdate
 
-class UserController:
+class UserController(CRUDBase[User,UserCreate,UserUpdate]):
+    def __init__(self):
+        super().__init__(model=User)
+    
+    
+    async def get_user(self,user_id:str):
+        return await User.get(user_id=user_id)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     async def get(self, id: int):
         return await User.get_or_none(user_id=id)
 

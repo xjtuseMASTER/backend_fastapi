@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `t_user` (
     `password` VARCHAR(255) NOT NULL  COMMENT '用户密码',
     `likes_num` INT NOT NULL  COMMENT '点赞数量' DEFAULT 0,
     `user_name` VARCHAR(255) NOT NULL  COMMENT '用户名',
-    `birthday` DATE   COMMENT '用户生日',
+    `birthday` DATETIME(6)   COMMENT '用户生日',
     `selfIntro` VARCHAR(255)   COMMENT '自我介绍',
     `avatar` VARCHAR(255)   COMMENT '用户头像链接',
     `gender` VARCHAR(50)   COMMENT '用户性别',
