@@ -12,6 +12,19 @@ async def getposts(pageNumber: int = Query(..., description="页码id"),user_id 
     return Success(data= [await post.to_dict() for post in posts])
 
 
+@router.get("/mypost", summary="用户查看自己的发帖")
+async def get_user_collect(
+    userId: str = Query(..., description="用户ID"),
+    pageNumber: int = Query(..., description="分页处理，第20条数据一页")
+):
+    print("用户查看收藏记录")
+
+    # 查询数据库，获取用户收藏数据
+    collects = await post_controller.get_user_own_posts(user_id=userId,pageNumber=pageNumber)
+    # 返回成功响应
+    return Success(data=[await collect.to_dict() for collect in collects])
+
+
 
 
 

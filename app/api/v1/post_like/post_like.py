@@ -14,3 +14,16 @@ async def create_post_like(like_in: PostLikeCreate):
 async def delete_post_like(id: int = Query(..., description="点赞ID")):
     await post_like_controller.delete_post_like(like_id=id)
     return Success(msg="Deleted Successfully")
+
+
+@router.get("/like", summary="用户查看收藏记录")
+async def get_user_collect(
+    userId: str = Query(..., description="用户ID"),
+    pageNumber: int = Query(..., description="分页处理，第20条数据一页")
+):
+    print("用户查看收藏记录")
+
+    # 查询数据库，获取用户收藏数据
+    collects = await post_like_controller.get_user_likes(user_id=userId,pageNumber=pageNumber)
+    # 返回成功响应
+    return Success(data=[await collect.to_dict() for collect in collects])
