@@ -161,48 +161,51 @@ class UserFeedback(BaseModel, TimestampMixin):
 
 
 class UserHeight(BaseModel, TimestampMixin):
-    user_id = fields.CharField(pk=True,max_length=36, description="用户ID")
+    record_id=fields.CharField(pk=True,max_length=36, description="记录ID")
+    user_id = fields.CharField(max_length=36, description="用户ID")
     height = fields.FloatField(description="身高 (cm)")
     record_date = fields.DateField(description="记录日期")
 
     class Meta:
         table = "t_user_height"
         table_description = "用户身高数据表"
-        unique_together = ("user_id", "record_date")
-
-
-
-class UserHeight(BaseModel, TimestampMixin):
-    user_id = fields.CharField(pk=True,max_length=36, description="用户ID")
-    height = fields.FloatField(description="身高 (cm)")
+        
+class UserWeight(BaseModel, TimestampMixin):
+    record_id=fields.CharField(pk=True,max_length=36, description="记录ID")
+    user_id = fields.CharField(max_length=36, description="用户ID")
+    height = fields.FloatField(description="体重 ")
     record_date = fields.DateField(description="记录日期")
 
     class Meta:
-        table = "t_user_height"
-        table_description = "用户身高数据表"
-        unique_together = ("user_id", "record_date")
+        table = "t_user_weight"
+        table_description = "用户体重数据表"
+        
+
+
 
 
 
 
 class UserVitalCapacity(BaseModel, TimestampMixin):
-    user_id = fields.CharField(pk=True,max_length=36, description="用户ID")
+    record_id=fields.CharField(pk=True,max_length=36, description="记录ID")
+    user_id = fields.CharField(max_length=36, description="用户ID")
     vital_capacity = fields.FloatField(description="肺活量 (mL)")
     record_date = fields.DateField(description="记录日期")
 
     class Meta:
         table = "t_user_vital_capacity"
         table_description = "用户肺活量数据表"
-        unique_together = ("user_id", "record_date")
+        
 
 
 
 class UserBodyFatRate(BaseModel, TimestampMixin):
-    user_id = fields.CharField(pk=True,max_length=36, description="用户ID")
+    record_id=fields.CharField(pk=True,max_length=36, description="记录ID")
+    user_id = fields.CharField(max_length=36, description="用户ID")
     body_fat_rate = fields.FloatField(description="体脂率 (%)")
     record_date = fields.DateField(description="记录日期")
 
     class Meta:
         table = "t_user_body_fat_rate"
         table_description = "用户体脂率数据表"
-        unique_together = ("user_id", "record_date")
+        
