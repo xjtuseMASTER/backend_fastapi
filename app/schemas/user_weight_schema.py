@@ -2,15 +2,15 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 
-class BaseUserHeight(BaseModel):
+class BaseUserWeight(BaseModel):
     user_id : str
-    height : float
+    weight : float
     record_date : Optional[datetime]
 
-class UserHeightCreate(BaseModel):
+class UserWeightCreate(BaseModel):
     user_id : str
-    height : float
+    weight : float
 
 
-class UserHeightUpadate(BaseModel):
+class UserWeightUpdate(BaseModel):
     pass

@@ -14,7 +14,7 @@ from .comment import comment_router
 from .post_like import post_like_router
 from .post_collect import post_collect_router
 from .user_height import user_height_router
-
+from .user_weight import user_weight_router
 
 
 
@@ -41,3 +41,4 @@ v1_router.include_router(comment_router, prefix="/comment", dependencies=[Depend
 v1_router.include_router(post_like_router, prefix="/post_like", dependencies=[DependPermisson])
 v1_router.include_router(post_collect_router, prefix="/post_collect", dependencies=[DependPermisson])
 v1_router.include_router(user_height_router, prefix="/user_height", dependencies=[DependPermisson])
+v1_router.include_router(user_weight_router, prefix="/user_weight", dependencies=[DependPermisson])
