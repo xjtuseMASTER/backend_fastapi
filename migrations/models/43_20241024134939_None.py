@@ -112,10 +112,10 @@ CREATE TABLE IF NOT EXISTS `t_user_body_fat_rate` (
     `id` BIGINT NOT NULL,
     `created_at` DATETIME(6) NOT NULL,
     `updated_at` DATETIME(6) NOT NULL,
-    `user_id` VARCHAR(36) NOT NULL  PRIMARY KEY COMMENT '用户ID',
+    `record_id` VARCHAR(36) NOT NULL  PRIMARY KEY COMMENT '记录ID',
+    `user_id` VARCHAR(36) NOT NULL  COMMENT '用户ID',
     `body_fat_rate` DOUBLE NOT NULL  COMMENT '体脂率 (%)',
-    `record_date` DATE NOT NULL  COMMENT '记录日期',
-    UNIQUE KEY `uid_t_user_body_user_id_f6d940` (`user_id`, `record_date`)
+    `record_date` DATE NOT NULL  COMMENT '记录日期'
 ) CHARACTER SET utf8mb4 COMMENT='用户体脂率数据表';
 CREATE TABLE IF NOT EXISTS `t_user_feedback` (
     `id` BIGINT NOT NULL,
@@ -143,10 +143,10 @@ CREATE TABLE IF NOT EXISTS `t_user_vital_capacity` (
     `id` BIGINT NOT NULL,
     `created_at` DATETIME(6) NOT NULL,
     `updated_at` DATETIME(6) NOT NULL,
-    `user_id` VARCHAR(36) NOT NULL  PRIMARY KEY COMMENT '用户ID',
+    `record_id` VARCHAR(36) NOT NULL  PRIMARY KEY COMMENT '记录ID',
+    `user_id` VARCHAR(36) NOT NULL  COMMENT '用户ID',
     `vital_capacity` DOUBLE NOT NULL  COMMENT '肺活量 (mL)',
-    `record_date` DATE NOT NULL  COMMENT '记录日期',
-    UNIQUE KEY `uid_t_user_vita_user_id_91f44a` (`user_id`, `record_date`)
+    `record_date` DATE NOT NULL  COMMENT '记录日期'
 ) CHARACTER SET utf8mb4 COMMENT='用户肺活量数据表';
 CREATE TABLE IF NOT EXISTS `t_user_weight` (
     `id` BIGINT NOT NULL,
